@@ -160,14 +160,14 @@ ${data.map(i => `* [${i.repo}#${i.number} ${i.title}](${i.url})${(i.requester &&
 
 ### ${titletext.value} - ${day.value}
 
-<table>
-<tr><td> San Francisco (U.S.A. - California) <td> ${printTime('America/Los_Angeles','en-us')}
-<tr><td> Boston (U.S.A. - Massachusetts) <td> ${printTime('America/New_York', 'en-us')}
-<tr><td> London (United Kingdom - England) <td> ${printTime('Europe/London')}
-<tr><td> Paris (France) <td> ${printTime('Europe/Paris')}
-<tr><td> Tokyo (Japan) <td> ${printTime('Asia/Tokyo')}
-<tr><td> Corresponding UTC (GMT) <td> ${printTime('UTC')}
-</table>
+| Location | Date & Time |
+| -------- | ----------- |
+| San Francisco (U.S.A.) | ${printTime('America/Los_Angeles','en-us')} |
+| Boston (U.S.A.) | ${printTime('America/New_York', 'en-us')} |
+| London (United Kingdom) | ${printTime('Europe/London', 'en-us')} |
+| Paris (France) | ${printTime('Europe/Paris', 'en-us')} |
+| Tokyo (Japan) | ${printTime('Asia/Tokyo', 'en-us')} |
+| Corresponding UTC (GMT) | ${printTime('UTC')} |
 
 ### Logistics
 
