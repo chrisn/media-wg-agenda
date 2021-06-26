@@ -64,7 +64,7 @@
     <label for="chairs">Chairs </label
     ><select id="chairs" multiple size="2">
       <option selected>Jer Noble</option>
-      <option selected>Mounir Lamouri</option>
+      <option selected>Chris Needham</option>
     </select>
     <label for="day">Meeting Date </label>
     <script>
@@ -133,7 +133,7 @@
                   timeZoneName: 'short'
                 })
               }
-              
+
               let chairs = "";
               for (let i = 0; i < document.querySelector('#chairs').options.length; ++i) {
                 const option = document.querySelector('#chairs').options[i];
@@ -187,7 +187,6 @@ Here are some issues which are good issues to get involved in, if you have taken
 
 ${helpwanted.map(i => `- [${i.repo}#${i.number} ${i.title}](${i.url})${i.milestone ? ` [<small>[${i.milestone}]</small>](${i.milestoneURL})` : ''}
 `).join('')}
-
               `;
 
               ta.value = fileContents;
@@ -205,7 +204,5 @@ ${helpwanted.map(i => `- [${i.repo}#${i.number} ${i.title}](${i.url})${i.milesto
               link.setAttribute('href', `https://github.com/w3c/media-wg/new/master/?filename=${encodeURIComponent(`/meetings/${outputurl.value}`)}&value=Agenda has been copied to clip board, paste here.`);
             });
     </script>
-
   </body>
 </html>
-
