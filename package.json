@@ -1,7 +1,7 @@
 {
-  "name": "my-glitch-app",
+  "name": "media-wg-agenda",
   "version": "0.0.1",
-  "description": "What am I about?",
+  "description": "Create agendas for the W3C Media Working Group",
   "scripts": {
     "start": "node server.js"
   },
