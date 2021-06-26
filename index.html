@@ -76,11 +76,11 @@
         `<input type="date" id="day" name="day" value="${nextTuesday}" min="${today}" />`
       );
     </script>
-    <label for="time">Meeting Time </label>
+    <label for="time">Meeting Time</label>
     <script>
       var d = new Date();
       d.setDate(d.getDate() + ((7 - d.getDay()) % 7) + 2);
-      d.setUTCHours("19");
+      d.setUTCHours("21");
       d.setUTCMinutes("00");
       document.write(
         `<input type="time" id="time" name="time" value="${d
