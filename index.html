@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Media WG Agenda</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="github-markdown.css" />
+
+    <!-- import the webpage's stylesheet -->
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: grid;
+        grid-template: repeat(7, max-content) 1fr / max-content 1fr;
+        grid-gap: 1em;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        padding: 3em;
+        font-family: Sans-Serif;
+      }
+
+      input {
+        height: 2em;
+      }
+
+      label {
+        text-align: right;
+        line-height: 2em;
+      }
+
+      textarea {
+        grid-column: span 2;
+      }
+
+      #preview.hidden {
+        display: none;
+      }
+
+      blockquote {
+        background: #efefef;
+        padding: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js"></script>
+
+    <a href="" id="link" target="_blank">Click here to create file.</a>
+    <button id="preview_btn" style="z-index: 100;">
+      Toggle Preview Markdown
+    </button>
+    <label for="titletext">Title </label><input id="titletext" type="text" value="Media Working Group Teleconference">
+    <div
+      id="preview"
+      class="markdown-body hidden"
+      style="right: 0;left: 0; position: absolute;padding: 3em;background: white;"
+    ></div>
+    <label for="chairs">Chairs </label
+    ><select id="chairs" multiple size="2">
+      <option selected>Jer Noble</option>
+      <option selected>Mounir Lamouri</option>
+    </select>
+    <label for="day">Meeting Date </label>
+    <script>
+      var d = new Date();
+      var today = d.toISOString().slice(0, 10);
+      d.setDate(d.getDate() + ((7 - d.getDay()) % 7) + 2);
+      var nextTuesday = d.toISOString().slice(0, 10);
+      document.write(
+        `<input type="date" id="day" name="day" value="${nextTuesday}" min="${today}" />`
+      );
+    </script>
+    <label for="time">Meeting Time </label>
+    <script>
+      var d = new Date();
+      d.setDate(d.getDate() + ((7 - d.getDay()) % 7) + 2);
+      d.setUTCHours("19");
+      d.setUTCMinutes("00");
+      document.write(
+        `<input type="time" id="time" name="time" value="${d
+          .toTimeString()
+          .slice(0, 5)}" />`
+      );
+    </script>
+    <label for="webex">WebEx Details </label>
+    <input id="webex" type="url" required value="https://lists.w3.org/Archives/Member/w3c-archive/2020Jan/0323.html">
+    <input type="text" style="grid-column: span 2;" readonly id="outputurl" />
+    <textarea></textarea>
+    <script>
+            var md = window.markdownit({
+              html: true,
+              linkify: true,
+              typographer: true
+            });
+
+            preview_btn.addEventListener('click', function () {
+              preview.classList.toggle('hidden');
+              preview.innerHTML = md.render(ta.value);
+            });
+
+            var ta = document.querySelector('textarea');
+
+            const helpwantedPromise = fetch('/helpwanted')
+              .then(o => o.json());
+
+            const agendaPromise = fetch('/agenda')
+              .then(o => o.json())
+              .then(o => Object.values(o));
+
+            async function update(e) {
+              if (e && e.target === ta) return;
+
+              ta.value = 'Updating...';
+
+              const date = new Date(day.value + ' ' + time.value);
+              const filename = `${date.toISOString().slice(0,10)}-${titletext.value.replace(/[^a-z0-9]/ig, '_')}-agenda.md`;
+              outputurl.value=filename;
+
+              function printTime(tz, locale) {
+                return date.toLocaleString(locale, {
+                  timeZone: tz,
+                  weekday: 'long',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  timeZoneName: 'short'
+                })
+              }
+              
+              let chairs = "";
+              for (let i = 0; i < document.querySelector('#chairs').options.length; ++i) {
+                const option = document.querySelector('#chairs').options[i];
+                if (option.selected) {
+                  if (chairs != "")
+                    chairs += ", ";
+                  chairs += option.value;
+                }
+              }
+
+              const data = await agendaPromise;
+              const helpwanted = await helpwantedPromise;
+              console.log(data);
+              console.log(helpwanted);
+
+              const fileContents=`### Agenda
+
+This agenda can be viewed and updated on [Github](https://github.com/w3c/media-wg/blob/master/meetings/${filename}).
+
+If you would like to add an item to the agenda or volunteer to scribe please open a pull request against this agenda.
+
+${data.map(i => `* [${i.repo}#${i.number} ${i.title}](${i.url})${(i.requester && ' [requested by ' + i.requester + '](' + i.request_comment.html_url + ')') || (i.user && ' - ' + i.user) || ''}
+> ${(i.request_comment && i.request_comment.body.replace('/agenda','').trim().split('\n').join('\n>')) || (i.body && i.body.trim().split('\n').slice(0,2).join('\n >')) || '[description]'}`).join('\n\n')}
+
+### ${titletext.value} - ${day.value}
+
+<table>
+<tr><td> San Francisco (U.S.A. - California) <td> ${printTime('America/Los_Angeles','en-us')}
+<tr><td> Boston (U.S.A. - Massachusetts) <td> ${printTime('America/New_York', 'en-us')}
+<tr><td> London (United Kingdom - England) <td> ${printTime('Europe/London')}
+<tr><td> Paris (France) <td> ${printTime('Europe/Paris')}
+<tr><td> Tokyo (Japan) <td> ${printTime('Asia/Tokyo')}
+<tr><td> Corresponding UTC (GMT) <td> ${printTime('UTC')}
+</table>
+
+### Logistics
+
+Chairs: ${chairs}
+
+WebEx: [${webex.value}]()
+
+IRC: [irc.w3.org](http://irc.w3.org/):6667 #mediawg
+
+If you are unable to login to view the call details please ask on the IRC before the call.
+
+For assistance go to https://mit.webex.com/mit/mc  and on the left navigation bar, click "Support".
+
+### Help Wanted
+
+Here are some issues which are good issues to get involved in, if you have taken responsibility for one leave a comment in the issue:
+
+${helpwanted.map(i => `- [${i.repo}#${i.number} ${i.title}](${i.url})${i.milestone ? ` [<small>[${i.milestone}]</small>](${i.milestoneURL})` : ''}
+`).join('')}
+
+              `;
+
+              ta.value = fileContents;
+              preview.innerHTML = md.render(ta.value);
+              link.setAttribute('href', `https://github.com/w3c/media-wg/new/master/meetings/?filename=${filename}&value=${encodeURIComponent(fileContents)}`);
+            }
+
+            update();
+
+            document.body.addEventListener('change', update);
+            document.body.addEventListener('keyup', update);
+            link.addEventListener('click', function () {
+              ta.select();
+              document.execCommand("copy");
+              link.setAttribute('href', `https://github.com/w3c/media-wg/new/master/?filename=${encodeURIComponent(`/meetings/${outputurl.value}`)}&value=Agenda has been copied to clip board, paste here.`);
+            });
+    </script>
+
+  </body>
+</html>
+
