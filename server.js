@@ -21,6 +21,8 @@ const repos = [
   "w3c/mediasession",
   "w3c/media-source",
   "w3c/picture-in-picture",
+  "w3c/webcodecs",
+  "w3c/charter-media-wg"
 ];
 
 const repo_url_prefix = "https://api.github.com/repos/";
@@ -41,7 +43,7 @@ function ghFetch(api, data) {
       body: data && JSON.stringify(data)
     })
     .then(response => response.json())
-    .catch(e => console.log(e)) 
+    .catch(e => console.log(e))
 }
 
 // Returns the repo list ending with a "+".
@@ -59,7 +61,7 @@ app.get("/agenda", bp.urlencoded({ extended: false }), async (req, res) => {
   const command = req.query.command || '/agenda';
   const data = {};
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  
+
   // Find all the tagged issues.
   const repoString = repoListForSearchString();
   const searchResults = (await ghFetch(`/search/issues?q=${repoString}label:"${label}"&sort=created&order=asc&per_page=100`));
@@ -76,7 +78,7 @@ app.get("/agenda", bp.urlencoded({ extended: false }), async (req, res) => {
     const comment = (await ghFetch(new url.URL(data[k].comments_url).pathname))
     .filter(comment => comment.body.match(new RegExp(`(^|\n)\\s*${command}`,'i')))
     .pop();
-    
+
     data[k] = {
       title: oldData.title,
       user: oldData.user.login,
@@ -94,7 +96,7 @@ app.get("/agenda", bp.urlencoded({ extended: false }), async (req, res) => {
       requester: comment && comment.user.login
     }
   }
-  
+
   res.json(data);
 });
 
@@ -115,7 +117,7 @@ app.get("/helpwanted", async function (req,res) {
       milestoneURL: i.milestone && i.milestone.url
     }
   }).filter(i => i.state === 'open');
-  
+
   res.json(data);
 });
 
@@ -138,4 +140,3 @@ app.use(function (req, res) {
 const listener = app.listen(process.env.PORT, () => {
   console.log(`Your app is listening on port ${listener.address().port}`)
 });
-
