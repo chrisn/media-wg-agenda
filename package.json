@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Create agendas for the W3C Media Working Group",
   "scripts": {
-    "start": "node server.js"
+    "start": "PORT=8080 node server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
