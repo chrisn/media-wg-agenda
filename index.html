@@ -151,7 +151,7 @@
 
               const fileContents=`### Agenda
 
-This agenda can be viewed and updated on [GitHub](https://github.com/w3c/media-wg/blob/master/meetings/${filename}).
+This agenda can be viewed and updated on [GitHub](https://github.com/w3c/media-wg/blob/main/meetings/${filename}).
 
 If you would like to add an item to the agenda or volunteer to scribe please open a pull request against this agenda.
 
@@ -191,7 +191,7 @@ ${helpwanted.map(i => `- [${i.repo}#${i.number} ${i.title}](${i.url})${i.milesto
 
               ta.value = fileContents;
               preview.innerHTML = md.render(ta.value);
-              link.setAttribute('href', `https://github.com/w3c/media-wg/new/master/meetings/?filename=${filename}&value=${encodeURIComponent(fileContents)}`);
+              link.setAttribute('href', `https://github.com/w3c/media-wg/new/main/meetings/?filename=${filename}&value=${encodeURIComponent(fileContents)}`);
             }
 
             update();
@@ -201,7 +201,7 @@ ${helpwanted.map(i => `- [${i.repo}#${i.number} ${i.title}](${i.url})${i.milesto
             link.addEventListener('click', function () {
               ta.select();
               document.execCommand("copy");
-              link.setAttribute('href', `https://github.com/w3c/media-wg/new/master/?filename=${encodeURIComponent(`/meetings/${outputurl.value}`)}&value=Agenda has been copied to clip board, paste here.`);
+              link.setAttribute('href', `https://github.com/w3c/media-wg/new/main/?filename=${encodeURIComponent(`/meetings/${outputurl.value}`)}&value=Agenda has been copied to the clipboard, paste here.`);
             });
     </script>
   </body>
