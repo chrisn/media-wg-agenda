@@ -137,6 +137,8 @@ app.use(function (req, res) {
   res.status(404).sendFile(__dirname + '/node_modules/html5-boilerplate/dist/404.html');
 });
 
-const listener = app.listen(process.env.PORT, () => {
+const port = process.env.PORT || 8080;
+
+const listener = app.listen(port, () => {
   console.log(`Your app is listening on port ${listener.address().port}`)
 });
