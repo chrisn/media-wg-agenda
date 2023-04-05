@@ -13,16 +13,17 @@ const url = require('url');
 
 // List of repositories handled by the Media WG.
 const repos = [
-  "w3c/media-wg",
+  "w3c/audio-session",
   "w3c/autoplay",
+  "w3c/charter-media-wg",
   "w3c/encrypted-media",
   "w3c/media-capabilities",
   "w3c/media-playback-quality",
   "w3c/mediasession",
   "w3c/media-source",
+  "w3c/media-wg",
   "w3c/picture-in-picture",
-  "w3c/webcodecs",
-  "w3c/charter-media-wg"
+  "w3c/webcodecs"
 ];
 
 const repo_url_prefix = "https://api.github.com/repos/";
