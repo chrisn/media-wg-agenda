@@ -61,12 +61,12 @@
       class="markdown-body hidden"
       style="right: 0;left: 0; position: absolute;padding: 3em;background: white;"
     ></div>
-    <label for="chairs">Chairs </label
-    ><select id="chairs" multiple size="2">
+    <label for="chairs">Chairs</label>
+    <select id="chairs" multiple size="2">
       <option selected>Jer Noble</option>
       <option selected>Chris Needham</option>
     </select>
-    <label for="day">Meeting Date </label>
+    <label for="day">Meeting Date</label>
     <script>
       var d = new Date();
       var today = d.toISOString().slice(0, 10);
@@ -83,9 +83,7 @@
       d.setUTCHours("21");
       d.setUTCMinutes("00");
       document.write(
-        `<input type="time" id="time" name="time" value="${d
-          .toTimeString()
-          .slice(0, 5)}" />`
+        `<input type="time" id="time" name="time" value="${d.toTimeString().slice(0, 5)}" />`
       );
     </script>
     <label for="zoom">Zoom Details</label>
@@ -120,7 +118,7 @@
 
               const date = new Date(day.value + ' ' + time.value);
               const filename = `${date.toISOString().slice(0,10)}-${titletext.value.replace(/[^a-z0-9]/ig, '_')}-agenda.md`;
-              outputurl.value=filename;
+              outputurl.value = filename;
 
               function printTime(tz, locale) {
                 return date.toLocaleString(locale, {
@@ -131,7 +129,7 @@
                   hour: 'numeric',
                   minute: 'numeric',
                   timeZoneName: 'short'
-                })
+                });
               }
 
               let chairs = "";
@@ -149,7 +147,7 @@
               console.log(data);
               console.log(helpwanted);
 
-              const fileContents=`### Agenda
+              const fileContents = `### Agenda
 
 This agenda can be viewed and updated on [GitHub](https://github.com/w3c/media-wg/blob/main/meetings/${filename}).
 
@@ -178,6 +176,10 @@ Zoom: ${zoom.value}
 IRC: https://irc.w3.org/?channels=#mediawg
 
 If you are unable to login to view the call details please ask on IRC before the call.
+`;
+
+              if (helpwanted.length > 0) {
+                fileContents += `
 
 ### Help Wanted
 
@@ -185,6 +187,7 @@ Here are some issues which are good issues to get involved in, if you have taken
 
 ${helpwanted.map(i => `- [${i.repo}#${i.number} ${i.title}](${i.url})${i.milestone ? ` [<small>[${i.milestone}]</small>](${i.milestoneURL})` : ''}
 `).join('')}`;
+              }
 
               ta.value = fileContents;
               preview.innerHTML = md.render(ta.value);
