@@ -88,8 +88,8 @@
           .slice(0, 5)}" />`
       );
     </script>
-    <label for="webex">WebEx Details </label>
-    <input id="webex" type="url" required value="https://lists.w3.org/Archives/Member/w3c-archive/2020Jan/0323.html">
+    <label for="zoom">Zoom Details</label>
+    <input id="zoom" type="url" required value="https://lists.w3.org/Archives/Member/w3c-archive/2023May/0295.html">
     <input type="text" style="grid-column: span 2;" readonly id="outputurl" />
     <textarea></textarea>
     <script>
@@ -167,19 +167,17 @@ ${data.map(i => `* [${i.repo}#${i.number} ${i.title}](${i.url})${(i.requester &&
 | London (United Kingdom) | ${printTime('Europe/London', 'en-us')} |
 | Paris (France) | ${printTime('Europe/Paris', 'en-us')} |
 | Tokyo (Japan) | ${printTime('Asia/Tokyo', 'en-us')} |
-| Corresponding UTC (GMT) | ${printTime('UTC')} |
+| Corresponding UTC (GMT) | ${printTime('UTC', 'en-us')} |
 
 ### Logistics
 
 Chairs: ${chairs}
 
-Webex: ${webex.value}
+Zoom: ${zoom.value}
 
 IRC: https://irc.w3.org/?channels=#mediawg
 
 If you are unable to login to view the call details please ask on IRC before the call.
-
-For assistance go to https://mit.webex.com/mit/mc  and on the left navigation bar, click "Support".
 
 ### Help Wanted
 
