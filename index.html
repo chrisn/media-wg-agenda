@@ -184,8 +184,7 @@ If you are unable to login to view the call details please ask on IRC before the
 Here are some issues which are good issues to get involved in, if you have taken responsibility for one leave a comment in the issue:
 
 ${helpwanted.map(i => `- [${i.repo}#${i.number} ${i.title}](${i.url})${i.milestone ? ` [<small>[${i.milestone}]</small>](${i.milestoneURL})` : ''}
-`).join('')}
-              `;
+`).join('')}`;
 
               ta.value = fileContents;
               preview.innerHTML = md.render(ta.value);
