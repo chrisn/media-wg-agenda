@@ -21,6 +21,11 @@ const repos = [
   "w3c/media-playback-quality",
   "w3c/mediasession",
   "w3c/media-source",
+  "w3c/mse-byte-stream-format-registry",
+  "w3c/mse-byte-stream-format-webm",
+  "w3c/mse-byte-stream-format-isobmff",
+  "w3c/mse-byte-stream-format-mp2t",
+  "w3c/mse-byte-stream-format-mpeg-audio",
   "w3c/media-wg",
   "w3c/picture-in-picture",
   "w3c/webcodecs"
